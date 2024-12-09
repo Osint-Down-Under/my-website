@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>OSINT-Down-Under</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Link to external CSS -->
     <style>
         body {
             margin: 0;
             overflow: hidden;
             background: black;
         }
+
         #background-video {
             position: fixed;
             top: 0;
@@ -19,23 +21,79 @@
             object-fit: cover;
             z-index: -1;
         }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 160px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
         #logo {
             position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 21%;
+            height: 38%;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
     <!-- Video Background -->
     <video id="background-video" autoplay muted loop>
-        <source src="assets/spinning-world.mp4" type="video/mp4">
+        <source src="images/spinning-world.mp4" type="video/mp4">
     </video>
 
-    <!-- Logo -->
-    <img id="logo" src="assets/logo.png" alt="Logo" width="10">
+    <!-- Logo with Tooltip -->
+    <div class="tooltip">
+        <img src="images/logo-c.png"  alt="logo" class="logo" id="logo">
+        <span class="tooltip-text" id="tooltip-text">Not sure what to do? You need to find the robots!!!</span>
+    </div>
 
+    <!-- JavaScript for tooltip positioning -->
+    <script>
+        const logo = document.getElementById('logo');
+        const tooltip = document.getElementById('tooltip-text');
+
+        logo.addEventListener('mouseover', function(e) {
+            // Get mouse coordinates relative to the viewport
+            const mouseX = e.pageX;
+            const mouseY = e.pageY;
+
+            // Position tooltip near the mouse
+            tooltip.style.left = `${mouseX + 10}px`;  // Offset to the right
+            tooltip.style.top = `${mouseY + 10}px`;   // Offset below the mouse
+
+            // Make the tooltip visible
+            tooltip.style.visibility = 'visible';
+            tooltip.style.opacity = '1';
+        });
+
+        logo.addEventListener('mouseout', function() {
+            // Hide the tooltip when the mouse leaves the logo
+            tooltip.style.visibility = 'hidden';
+            tooltip.style.opacity = '0';
+        });
+    </script>
 </body>
 </html>
-
